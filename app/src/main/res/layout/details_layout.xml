@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="20dp">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -42,7 +43,8 @@
             android:textSize="20dp"
             android:layout_centerHorizontal="true"
             android:textColor="@color/teal_700"
-            android:textStyle="bold"/>
+            android:textStyle="bold"
+            android:layout_marginTop="8dp"/>
         <TextView
             android:id="@+id/instructions"
             android:layout_below="@id/instructionsTitle"
@@ -58,13 +60,13 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_centerHorizontal="true"
-            app:cardCornerRadius="100dp">
+            app:cardCornerRadius="50dp">
             <ImageView
                 android:id="@+id/image"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:scaleType="centerCrop"
-                tools:srcCompat="@drawable/img" />
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitXY"
+                tools:src="@drawable/ic_launcher_background" />
         </androidx.cardview.widget.CardView>
 
             <Button

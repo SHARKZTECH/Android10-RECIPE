@@ -49,6 +49,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyHolder> {
             @Override
             public void onClick(View view) {
                 Toast.makeText(context, "clicked", Toast.LENGTH_SHORT).show();
+
+                myDialog.setTitle("Kuku");
                 myDialog.show();
 
             }

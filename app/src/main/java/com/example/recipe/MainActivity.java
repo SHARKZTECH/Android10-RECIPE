@@ -30,28 +30,24 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setAdapter(myAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
 
-
-
-
-
-
     }
 
     private AlertDialog MyDialog() {
-                        AlertDialog.Builder builder=new AlertDialog.Builder(MainActivity.this);
-                        View view1=getLayoutInflater().inflate(R.layout.details_layout,null);
+        AlertDialog.Builder builder=new AlertDialog.Builder(MainActivity.this);
+        View view1=getLayoutInflater().inflate(R.layout.details_layout,null);
+        builder.setView(view1);
+        AlertDialog dialog=builder.create();
 
-                builder.setView(view1);
-
-
-                TextView title=view1.findViewById(R.id.title);
-                Button cancle=view1.findViewById(R.id.cancel_button);
-
-                title.setText("Chips");
-                return builder.create();
-
-
-
+        TextView title=view1.findViewById(R.id.title);
+        Button cancle=view1.findViewById(R.id.cancel_button);
+        cancle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.cancel();
+            }
+        });
+        title.setText("Chips");
+        return dialog;
     }
 
 
