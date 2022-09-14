@@ -22,12 +22,12 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyHolder> {
 
     Context context;
     List<MyModel> recipes;
-    AlertDialog myDialog;
+    AlertDialog alertDialog;
 
-    public MyAdapter(Context context, List<MyModel> recipes, AlertDialog myDialog) {
+    public MyAdapter(Context context, List<MyModel> recipes, AlertDialog alertDialog) {
         this.context = context;
         this.recipes = recipes;
-        this.myDialog = myDialog;
+        this.alertDialog=alertDialog;
     }
 
     @NonNull
@@ -48,12 +48,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyHolder> {
         holder.details.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(context, "clicked", Toast.LENGTH_SHORT).show();
-
-                myDialog.setTitle("Kuku");
-                myDialog.show();
-
-            }
+                alertDialog.show();
+           }
         });
 
     }

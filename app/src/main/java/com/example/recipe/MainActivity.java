@@ -19,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     MyAdapter myAdapter;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,17 +27,18 @@ public class MainActivity extends AppCompatActivity {
         initData();
 
         recyclerView=findViewById(R.id.recyclerView);
-        myAdapter=new MyAdapter(getApplicationContext(),recipes,MyDialog());
+        myAdapter=new MyAdapter(getApplicationContext(),recipes,myDialog());
         recyclerView.setAdapter(myAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
 
     }
 
-    private AlertDialog MyDialog() {
+    public AlertDialog myDialog() {
         AlertDialog.Builder builder=new AlertDialog.Builder(MainActivity.this);
         View view1=getLayoutInflater().inflate(R.layout.details_layout,null);
         builder.setView(view1);
         AlertDialog dialog=builder.create();
+
 
         TextView title=view1.findViewById(R.id.title);
         Button cancle=view1.findViewById(R.id.cancel_button);
