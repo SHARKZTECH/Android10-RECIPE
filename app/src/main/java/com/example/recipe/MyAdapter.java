@@ -3,6 +3,7 @@ package com.example.recipe;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,12 +23,10 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyHolder> {
 
     Context context;
     List<MyModel> recipes;
-    AlertDialog alertDialog;
 
-    public MyAdapter(Context context, List<MyModel> recipes, AlertDialog alertDialog) {
+    public MyAdapter(Context context, List<MyModel> recipes) {
         this.context = context;
         this.recipes = recipes;
-        this.alertDialog=alertDialog;
     }
 
     @NonNull
@@ -48,7 +47,10 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyHolder> {
         holder.details.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                alertDialog.show();
+                Intent i=new Intent(context,DetailsActivity.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                i.putExtra("ID",10);
+                context.startActivity(i);
            }
         });
 

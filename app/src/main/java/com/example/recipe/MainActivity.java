@@ -27,29 +27,10 @@ public class MainActivity extends AppCompatActivity {
         initData();
 
         recyclerView=findViewById(R.id.recyclerView);
-        myAdapter=new MyAdapter(getApplicationContext(),recipes,myDialog());
+        myAdapter=new MyAdapter(getApplicationContext(),recipes);
         recyclerView.setAdapter(myAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
 
-    }
-
-    public AlertDialog myDialog() {
-        AlertDialog.Builder builder=new AlertDialog.Builder(MainActivity.this);
-        View view1=getLayoutInflater().inflate(R.layout.details_layout,null);
-        builder.setView(view1);
-        AlertDialog dialog=builder.create();
-
-
-        TextView title=view1.findViewById(R.id.title);
-        Button cancle=view1.findViewById(R.id.cancel_button);
-        cancle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dialog.cancel();
-            }
-        });
-        title.setText("Chips");
-        return dialog;
     }
 
 
