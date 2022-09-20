@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +20,10 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,9 +48,17 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull MyHolder holder, int position) {
-        Log.d("Recipes",recipes.toString());
         MealsModel recipe=recipes.get(position);
-        holder.titleView.setText(recipe.getName());
+        holder.titleView.setText(recipe.getName()+recipe.getId());
+
+//        try {
+//            Bitmap bitmap = BitmapFactory.decodeStream((InputStream)new URL(recipe.getImage()).getContent());
+//            holder.imageView.setImageBitmap(bitmap);
+//        } catch (MalformedURLException e) {
+//            e.printStackTrace();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
 //        holder.imageView.setImageResource(recipe.getImage());
 
         holder.details.setOnClickListener(new View.OnClickListener() {
@@ -52,7 +66,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyHolder> {
             public void onClick(View view) {
                 Intent i=new Intent(context,DetailsActivity.class);
                 i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                i.putExtra("ID",10);
+                i.putExtra("ID",recipes.get(holder.getAdapterPosition()).getName());
                 context.startActivity(i);
            }
         });

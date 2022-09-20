@@ -20,7 +20,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
 
-    List<MyModel> recipes=new ArrayList<>();
     ArrayList<MealsModel> data;
     RecyclerView recyclerView;
     MyAdapter myAdapter;
@@ -73,4 +72,5 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+
 }
