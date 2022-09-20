@@ -20,17 +20,21 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Handler;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyHolder> {
 
     Context context;
     ArrayList<MealsModel> recipes;
+
 
     public MyAdapter(Context context, ArrayList<MealsModel> recipes) {
         this.context = context;
@@ -50,6 +54,9 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyHolder> {
     public void onBindViewHolder(@NonNull MyHolder holder, int position) {
         MealsModel recipe=recipes.get(position);
         holder.titleView.setText(recipe.getName()+recipe.getId());
+
+        Glide.with(holder.imageView).load(recipe.getImage()).into(holder.imageView);
+
 
 //        try {
 //            Bitmap bitmap = BitmapFactory.decodeStream((InputStream)new URL(recipe.getImage()).getContent());
@@ -89,4 +96,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyHolder> {
             details=itemView.findViewById(R.id.detailsBtn);
         }
     }
+
+
 }
