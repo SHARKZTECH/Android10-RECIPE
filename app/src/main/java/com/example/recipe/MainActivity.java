@@ -1,18 +1,15 @@
 package com.example.recipe;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import retrofit2.Call;
@@ -24,6 +21,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class MainActivity extends AppCompatActivity {
 
     List<MyModel> recipes=new ArrayList<>();
+    ArrayList<MealsModel> data;
     RecyclerView recyclerView;
     MyAdapter myAdapter;
 
@@ -45,34 +43,34 @@ public class MainActivity extends AppCompatActivity {
 
         initData();
 
-        recyclerView=findViewById(R.id.recyclerView);
-        myAdapter=new MyAdapter(getApplicationContext(),recipes);
-        recyclerView.setAdapter(myAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
+
 
     }
 
 
     private void initData() {
-        Call<MyModel> call=retrofitInterface.excuteItems();
-        call.enqueue(new Callback<MyModel>() {
+        Call<Meals> call=retrofitInterface.excuteItems();
+        call.enqueue(new Callback<Meals>() {
             @Override
-            public void onResponse(Call<MyModel> call, Response<MyModel> response) {
+            public void onResponse(Call<Meals> call, Response<Meals> response) {
                 if(response.isSuccessful()){
-                    Log.d("Result:",response.body().toString());
+                    Meals meals=response.body();
+                    data=new ArrayList<>(Arrays.asList(meals.getMeals()));
+
+                    recyclerView=findViewById(R.id.recyclerView);
+                    myAdapter=new MyAdapter(getApplicationContext(),data);
+                    recyclerView.setAdapter(myAdapter);
+                    recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
+
                 }
             }
 
             @Override
-            public void onFailure(Call<MyModel> call, Throwable t) {
+            public void onFailure(Call<Meals> call, Throwable t) {
                 Toast.makeText(MainActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+
             }
         });
-        recipes.add(new MyModel("Chips", R.drawable.img));
-        recipes.add(new MyModel("Chips", R.drawable.img));
-        recipes.add(new MyModel("Chips", R.drawable.img));
-        recipes.add(new MyModel("Chips", R.drawable.img));
-        recipes.add(new MyModel("Chips", R.drawable.img));
-        recipes.add(new MyModel("Chips", R.drawable.img));
+
     }
 }

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,14 +18,15 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyHolder> {
 
     Context context;
-    List<MyModel> recipes;
+    ArrayList<MealsModel> recipes;
 
-    public MyAdapter(Context context, List<MyModel> recipes) {
+    public MyAdapter(Context context, ArrayList<MealsModel> recipes) {
         this.context = context;
         this.recipes = recipes;
     }
@@ -40,9 +42,10 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull MyHolder holder, int position) {
-        MyModel recipe=recipes.get(position);
-        holder.titleView.setText(recipe.getTitle());
-        holder.imageView.setImageResource(recipe.getImage());
+        Log.d("Recipes",recipes.toString());
+        MealsModel recipe=recipes.get(position);
+        holder.titleView.setText(recipe.getName());
+//        holder.imageView.setImageResource(recipe.getImage());
 
         holder.details.setOnClickListener(new View.OnClickListener() {
             @Override
