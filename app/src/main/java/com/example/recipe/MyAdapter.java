@@ -20,11 +20,11 @@ import java.util.List;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyHolder> {
 
-    Context context;
+    MainActivity context;
     List<MyModel> recipes;
     AlertDialog alertDialog;
 
-    public MyAdapter(Context context, List<MyModel> recipes, AlertDialog alertDialog) {
+    public MyAdapter(MainActivity context, List<MyModel> recipes, AlertDialog alertDialog) {
         this.context = context;
         this.recipes = recipes;
         this.alertDialog=alertDialog;
@@ -48,7 +48,23 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyHolder> {
         holder.details.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                alertDialog.show();
+//                alertDialog.show();
+                AlertDialog.Builder builder=new AlertDialog.Builder(view.getContext());
+                View view1=context.getLayoutInflater().inflate(R.layout.details_layout,null);
+                builder.setView(view1);
+                AlertDialog dialog=builder.create();
+
+                TextView title=view1.findViewById(R.id.title);
+                Button cancle=view1.findViewById(R.id.cancel_button);
+
+                title.setText(recipe.getTitle());
+                cancle.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialog.cancel();
+                    }
+                });
+                dialog.show();
            }
         });
 
