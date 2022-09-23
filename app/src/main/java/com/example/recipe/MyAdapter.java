@@ -32,11 +32,11 @@ import java.util.logging.Handler;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyHolder> {
 
-    Context context;
+    MainActivity context;
     ArrayList<MealsModel> recipes;
 
 
-    public MyAdapter(Context context, ArrayList<MealsModel> recipes) {
+    public MyAdapter(MainActivity context, ArrayList<MealsModel> recipes) {
         this.context = context;
         this.recipes = recipes;
     }
@@ -57,24 +57,34 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyHolder> {
 
         Glide.with(holder.imageView).load(recipe.getImage()).into(holder.imageView);
 
-
-//        try {
-//            Bitmap bitmap = BitmapFactory.decodeStream((InputStream)new URL(recipe.getImage()).getContent());
-//            holder.imageView.setImageBitmap(bitmap);
-//        } catch (MalformedURLException e) {
-//            e.printStackTrace();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        holder.imageView.setImageResource(recipe.getImage());
-
         holder.details.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i=new Intent(context,DetailsActivity.class);
-                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                i.putExtra("ID",recipes.get(holder.getAdapterPosition()).getName());
-                context.startActivity(i);
+                AlertDialog.Builder builder=new AlertDialog.Builder(view.getContext());
+                View view1=context.getLayoutInflater().inflate(R.layout.details_layout,null);
+                builder.setView(view1);
+                AlertDialog dialog=builder.create();
+
+                TextView title=view1.findViewById(R.id.title);
+                TextView instruc=view1.findViewById(R.id.instructions);
+                Button yt=view1.findViewById(R.id.yt);
+                ImageView imageView=view1.findViewById(R.id.image);
+                Button cancle=view1.findViewById(R.id.cancel_button);
+
+                title.setText(recipe.getName());
+                Glide.with(imageView).load(recipe.getImage()).into(imageView);
+
+                cancle.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialog.cancel();
+                    }
+                });
+                dialog.show();
+//                Intent i=new Intent(context,DetailsActivity.class);
+//                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                i.putExtra("ID",recipes.get(holder.getAdapterPosition()).getName());
+//                context.startActivity(i);
            }
         });
 

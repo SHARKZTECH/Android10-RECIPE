@@ -42,8 +42,6 @@ public class MainActivity extends AppCompatActivity {
 
         initData();
 
-
-
     }
 
 
@@ -57,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
                     data=new ArrayList<>(Arrays.asList(meals.getMeals()));
 
                     recyclerView=findViewById(R.id.recyclerView);
-                    myAdapter=new MyAdapter(getApplicationContext(),data);
+                    myAdapter=new MyAdapter(MainActivity.this,data);
                     recyclerView.setAdapter(myAdapter);
                     recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
 
