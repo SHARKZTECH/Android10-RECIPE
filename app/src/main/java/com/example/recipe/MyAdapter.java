@@ -27,13 +27,24 @@ import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Handler;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyHolder> {
 
     MainActivity context;
     ArrayList<MealsModel> recipes;
+
+    private RetrofitInterface retrofitInterface;
+    private Retrofit retrofit;
+    private String BASE_URL="https://www.themealdb.com/api/json/v1/1/";
 
 
     public MyAdapter(MainActivity context, ArrayList<MealsModel> recipes) {
@@ -47,13 +58,20 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyHolder> {
         Context context=parent.getContext();
         LayoutInflater inflater=LayoutInflater.from(context);
         View view=inflater.inflate(R.layout.items_layout,null);
+
+        retrofit=new Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        retrofitInterface=retrofit.create(RetrofitInterface.class);
+
         return new MyHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull MyHolder holder, int position) {
         MealsModel recipe=recipes.get(position);
-        holder.titleView.setText(recipe.getName()+recipe.getId());
+        holder.titleView.setText(recipe.getName());
 
         Glide.with(holder.imageView).load(recipe.getImage()).into(holder.imageView);
 
@@ -70,6 +88,23 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyHolder> {
                 Button yt=view1.findViewById(R.id.yt);
                 ImageView imageView=view1.findViewById(R.id.image);
                 Button cancle=view1.findViewById(R.id.cancel_button);
+
+                Call<Meal> call=retrofitInterface.excuteItem(recipe.getId());
+                call.enqueue(new Callback<Meal>() {
+                    @Override
+                    public void onResponse(Call<Meal> call, Response<Meal> response) {
+                        if(response.isSuccessful()) {
+                            Meal meal=response.body();
+                            ArrayList<MealsModel> data=new ArrayList<>(Arrays.asList(meal.getMeal()));
+//                            Log.d("Recipe",data.toString());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Meal> call, Throwable t) {
+                        Toast.makeText(context, t.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
 
                 title.setText(recipe.getName());
                 Glide.with(imageView).load(recipe.getImage()).into(imageView);
