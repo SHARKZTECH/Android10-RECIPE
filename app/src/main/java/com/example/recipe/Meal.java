@@ -1,9 +1,10 @@
 package com.example.recipe;
 
-public class Meal {
-    private MealsModel[] meal;
 
-    public MealsModel[] getMeal() {
+public class Meal {
+   private MealModel[] meal;
+
+    public MealModel[] getMeal() {
         return meal;
     }
 }

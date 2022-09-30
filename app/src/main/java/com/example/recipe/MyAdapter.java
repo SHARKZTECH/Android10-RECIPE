@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,6 +43,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyHolder> {
     MainActivity context;
     ArrayList<MealsModel> recipes;
 
+    ArrayList<MealsModel> data;
     private RetrofitInterface retrofitInterface;
     private Retrofit retrofit;
     private String BASE_URL="https://www.themealdb.com/api/json/v1/1/";
@@ -89,19 +91,28 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyHolder> {
                 ImageView imageView=view1.findViewById(R.id.image);
                 Button cancle=view1.findViewById(R.id.cancel_button);
 
-                Call<Meal> call=retrofitInterface.excuteItem(recipe.getId());
-                call.enqueue(new Callback<Meal>() {
+                Call<Meals> call=retrofitInterface.excuteItem(recipe.getId());
+                call.enqueue(new Callback<Meals>() {
                     @Override
-                    public void onResponse(Call<Meal> call, Response<Meal> response) {
+                    public void onResponse(Call<Meals> call, Response<Meals> response) {
                         if(response.isSuccessful()) {
-                            Meal meal=response.body();
-                            ArrayList<MealsModel> data=new ArrayList<>(Arrays.asList(meal.getMeal()));
-//                            Log.d("Recipe",data.toString());
+                            Meals meals = response.body();
+                            data=new ArrayList<>(Arrays.asList(meals.getMeals()));
+
+                            instruc.setText(data.get(0).getInstruc());
+                            yt.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    String url=data.get(0).getYt();
+                                    Intent i=new Intent(Intent.ACTION_VIEW);
+                                    i.setData(Uri.parse(url));
+                                    context.startActivity(i);
+                                }
+                            });
                         }
                     }
-
                     @Override
-                    public void onFailure(Call<Meal> call, Throwable t) {
+                    public void onFailure(Call<Meals> call, Throwable t) {
                         Toast.makeText(context, t.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });

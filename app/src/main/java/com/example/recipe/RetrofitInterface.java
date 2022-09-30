@@ -10,6 +10,6 @@ public interface RetrofitInterface {
     Call<Meals> excuteItems();
 
     @GET("lookup.php")
-    Call<Meal> excuteItem(@Query("i") String id);
+    Call<Meals> excuteItem(@Query("i") String id);
 
 }

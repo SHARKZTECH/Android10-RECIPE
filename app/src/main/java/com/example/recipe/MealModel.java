@@ -2,7 +2,7 @@ package com.example.recipe;
 
 import com.google.gson.annotations.SerializedName;
 
-public class MealsModel {
+public class MealModel {
     @SerializedName("strMeal")
     private String name;
     @SerializedName("idMeal")
@@ -11,8 +11,8 @@ public class MealsModel {
     private  String image;
     @SerializedName("strInstructions")
     private String instruc;
-    @SerializedName("strYoutube")
-    private  String yt;
+    @SerializedName("strMealThumb")
+    private String yt;
 
     public String getName() {
         return name;
