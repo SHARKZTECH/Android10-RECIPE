@@ -11,9 +11,12 @@
         android:id="@+id/search"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="Search By Ingridient"
+        android:layout_marginLeft="50dp"
         android:layout_marginRight="20dp"
-        android:layout_marginLeft="50dp"/>
+        android:cursorVisible="false"
+        android:editable="false"
+        android:enabled="false"
+        android:hint="Search By Ingridient" />
     <Button
         android:id="@+id/searchBtn"
         android:layout_width="wrap_content"
